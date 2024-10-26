@@ -1,4 +1,4 @@
 #!/bin/bash
 
-docker build -t customerapi .
-docker run -dp 8000:8000 --env-file=.env -v ./app:/app frontend
+docker build -t todo_list_frontend .
+docker run -dp 8000:8000 -v ./app:/app todo_list_frontend

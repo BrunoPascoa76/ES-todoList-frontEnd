@@ -26,4 +26,5 @@ def callback():
 @app.route("/logout")
 def logout():
     http.get(f"{API_URL}/sign_out")
+    response.delete_cookie("access_token")
 
