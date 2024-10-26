@@ -1,5 +1,6 @@
+import sys
 from flask import Flask, make_response, redirect, render_template, request, url_for
-from secret import API_URL, AWS_COGNITO_HOSTED_URL
+from secret import API_URL, AWS_COGNITO_HOSTED_URL, PORT
 import requests as http
 
 app = Flask(__name__)
@@ -17,14 +18,20 @@ def home_page():
 @app.route("/redirect")
 def callback():
     if "code" in request.args:
-        resp=make_response("success")
+        resp=redirect("/")
         resp.set_cookie("access_token",request.args.get("code"),httponly=True,secure=True)
-        return redirect("/")
+        return resp
     else:
         return "code not returned",400
 
 @app.route("/logout")
 def logout():
-    http.get(f"{API_URL}/sign_out")
-    response.delete_cookie("access_token")
+    #http.get(f"{API_URL}/sign_out")
+    resp=redirect("/")
+    resp.delete_cookie("access_token")
+    return resp
+
+
+if __name__ == '__main__':
+    app.run(debug=True, port=PORT)
 
